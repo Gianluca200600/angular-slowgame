@@ -1,0 +1,48 @@
+<form [formGroup]="form">
+    <div>
+        <div>
+            <input formControlName="gameName" class="w-full border rounded-md pl-2" type="text" id="name" name="name" placeholder="Cerca un gioco">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
+        <div>
+            <label for="min-player-number">Minimo Giocatori</label>
+        </div>
+        <div>
+            <input formControlName="minPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="min-player-number"
+                name="min-player-number" min="1" max="9" value="1"/>
+            
+        </div>
+        <div>
+            <label for="max-player-number">Massimo Giocatori</label>
+        </div>
+        <div>
+            <input formControlName="maxPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="max-player-number"
+                name="max-player-number" min="1" max="9" value="9"/>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
+        <div>
+            <label for="playing-time">Durata</label>
+        </div>
+        <div>
+            <select formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time" name="playing-time">
+                <option value="0">Qualsiasi</option>
+                <option value="1">Meno di 30 minuti</option>
+                <option value="2">30-60 minuti</option>
+                <option value="3">60-120 minuti</option>
+                <option value="4">Più di 120 minuti</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <button (click)="onSubmit()" class="block w-1/5 m-auto border rounded-md hover:bg-stone-300 hover:cursor-pointer" type="submit"
+            id="filter-button">
+            Filtra
+            <i class="fa-solid fa-filter"></i>
+        </button>
+    </div>
+</form>
