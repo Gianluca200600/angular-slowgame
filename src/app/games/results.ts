@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Game } from '../model/game';
+import { GameCard } from "./game-card";
 
 @Component({
   selector: 'app-results',
-  imports: [],
+  imports: [GameCard],
   templateUrl: './results.html',
   styleUrl: './results.css'
 })
 export class Results {
-
+  gamesInput = input<Game[]>();
 }

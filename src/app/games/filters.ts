@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameFilters } from '../model/game-filters';
-import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
+import { output } from '@angular/core';
+import { Game } from '../model/game';
+import { SearchService } from '../model/search-service';
 
 @Component({
   selector: 'app-filters',
@@ -11,35 +13,36 @@ import { tap } from 'rxjs';
   styleUrl: './filters.css'
 })
 export class Filters {
-  form = new FormGroup ({
+
+  gamesOutput = output<Game[]>();
+  searchService: SearchService;
+
+  form = new FormGroup({
     gameName: new FormControl(''),
     minPlayerNumber: new FormControl(0),
     maxPlayerNumber: new FormControl(0),
     playingTime: new FormControl('')
   });
-  http: HttpClient;
 
   onSubmit() {
     const rawValues = this.form.value;
     const formValues: GameFilters = {
-      gameName: rawValues.gameName ?? null,
+      name: rawValues.gameName ?? null,
       minPlayerNumber: rawValues.minPlayerNumber ?? null,
       maxPlayerNumber: rawValues.maxPlayerNumber ?? null,
       playingTime: rawValues.playingTime ?? null
     };
     console.log('Form submitted:', formValues);
-    this.http.get("/games.json").pipe(
-      tap(data => {
-        console.log('Data fetched:', data);
-      })
-    ).subscribe( (data: any) => {
-      console.log('Data received:', data);
-    });
+    this.searchService.search(formValues).subscribe(
+      data => {
+        this.gamesOutput.emit(data);
+      }
+    );
 
   }
 
-  constructor(http: HttpClient) {
-    this.http = http;
+  constructor(searchService: SearchService) {
+    this.searchService = searchService;
   }
 
 }

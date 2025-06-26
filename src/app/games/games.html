@@ -1,2 +1,2 @@
-<app-filters> </app-filters> 
-<app-results> </app-results>
+<app-filters (gamesOutput)="onFilter($event)"> </app-filters> 
+<app-results [gamesInput]="gamesSignal()"> </app-results>

@@ -1,1 +1,7 @@
-<p>results works!</p>
+@if (gamesInput()) {
+    @for (game of gamesInput(); track $index) {
+        <app-game-card [gameInput]="game"> </app-game-card>
+    }
+} @else {
+    <p> No search initiated. </p>
+}

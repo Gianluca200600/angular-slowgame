@@ -1,1 +1,32 @@
-<p>game-card works!</p>
+@if (gameInput()) {
+<div class="border grid p-2">
+    <header class="flex gap-2 items-center">
+        <figure class="max-w-1/5">
+
+        </figure>
+        <h4 class="text-2xl font-bold">{{gameInput()!.name}}</h4>
+    </header>
+    <main>
+        <p class="max-h-[200px] my-2 overflow-auto">
+            {{gameInput()!.description}}
+        </p>
+    </main>
+
+    <footer class="flex justify-between items-center">
+        <div>
+            <p>
+                <i class="fa-solid fa-clock"></i>
+                {{gameInput()!.playingTime}}
+            </p>
+        </div>
+        <div>
+            <p>
+                <i class="fa-solid fa-users"></i>
+                {{gameInput()!.minPlayerNumber}}
+                <span> - </span>
+                {{gameInput()!.maxPlayerNumber}}
+            </p>
+        </div>
+    </footer>
+</div>
+}
