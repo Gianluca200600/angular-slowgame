@@ -10,31 +10,21 @@ import { GameFilters } from './game-filters';
 export class SearchService {
 
   search(filters: GameFilters): Observable<Game[]> {
-    return this.http.get<any[]>("/games.json").pipe(
+    return this.http.get<Game[]>("/games-data.json").pipe(
       map(
         data => {
-          const filteredGames = data.map(game => {
-            const gameCopy: Game = {
-              name: game.name || "",
-              description: game.description || "",
-              minPlayerNumber: (game.players.split('-'))[0] || "",
-              maxPlayerNumber: (game.players.split('-'))[1] || "",
-              playingTime: game['playing-time'] || ""
-            }
-            return gameCopy;
-          })
-            .filter(game => {
+          const filteredGames = data.filter(game => {
 
               const nameFilter = filters.name?.toLowerCase() || "";
-              const minPlayerNumberFilter = filters.minPlayerNumber;
-              const maxPlayerNumberFilter = filters.maxPlayerNumber;
+              const minPlayerNumberFilter = filters.minPlayers;
+              const maxPlayerNumberFilter = filters.maxPlayers;
               const playingTimeFilter = filters.playingTime?.toLowerCase();
 
               if (nameFilter && !game.name.toLowerCase().includes(nameFilter)) {
                 return false;
               }
               if (minPlayerNumberFilter && minPlayerNumberFilter !== 0 && maxPlayerNumberFilter && maxPlayerNumberFilter !== 0) {
-                if (game.minPlayerNumber < minPlayerNumberFilter || game.maxPlayerNumber > maxPlayerNumberFilter) {
+                if (game.minPlayers < minPlayerNumberFilter || game.maxPlayers > maxPlayerNumberFilter) {
                   return false;
                 }
                 if (minPlayerNumberFilter > maxPlayerNumberFilter) {

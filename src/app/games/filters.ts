@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameFilters } from '../model/game-filters';
-import { tap } from 'rxjs';
 import { output } from '@angular/core';
 import { Game } from '../model/game';
 import { SearchService } from '../model/search-service';
@@ -28,8 +27,8 @@ export class Filters {
     const rawValues = this.form.value;
     const formValues: GameFilters = {
       name: rawValues.gameName ?? null,
-      minPlayerNumber: rawValues.minPlayerNumber ?? null,
-      maxPlayerNumber: rawValues.maxPlayerNumber ?? null,
+      minPlayers: rawValues.minPlayerNumber ?? null,
+      maxPlayers: rawValues.maxPlayerNumber ?? null,
       playingTime: rawValues.playingTime ?? null
     };
     console.log('Form submitted:', formValues);
