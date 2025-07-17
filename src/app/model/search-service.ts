@@ -1,13 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Game } from './game';
 import { map, Observable } from 'rxjs';
 import { GameFilters } from './game-filters';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
+
+  firestore = inject(Firestore);
+  gamesCollection = collection(this.firestore, 'games');
+  public game$ = collectionData<any>(this.gamesCollection);
 
   search(filters: GameFilters): Observable<Game[]> {
     return this.http.get<Game[]>("/games-data.json").pipe(
