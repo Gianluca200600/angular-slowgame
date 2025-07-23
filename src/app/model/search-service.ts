@@ -12,10 +12,10 @@ export class SearchService {
 
   firestore = inject(Firestore);
   gamesCollection = collection(this.firestore, 'games');
-  public game$ = collectionData<any>(this.gamesCollection);
+  public games$ = collectionData(this.gamesCollection) as Observable<Game[]>;
 
   search(filters: GameFilters): Observable<Game[]> {
-    return this.http.get<Game[]>("/games-data.json").pipe(
+    return this.games$.pipe(
       map(
         data => {
           const filteredGames = data.filter(game => {
@@ -29,7 +29,7 @@ export class SearchService {
                 return false;
               }
               if (minPlayerNumberFilter && minPlayerNumberFilter !== 0 && maxPlayerNumberFilter && maxPlayerNumberFilter !== 0) {
-                if (game.minPlayers < minPlayerNumberFilter || game.maxPlayers > maxPlayerNumberFilter) {
+                if (game.minPlayers > maxPlayerNumberFilter || game.maxPlayers > maxPlayerNumberFilter || game.maxPlayers < minPlayerNumberFilter) {
                   return false;
                 }
                 if (minPlayerNumberFilter > maxPlayerNumberFilter) {

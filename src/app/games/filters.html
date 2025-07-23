@@ -11,14 +11,14 @@
         </div>
         <div>
             <input formControlName="minPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="min-player-number"
-                name="min-player-number" min="1" max="9" value="1"/>
+                name="min-player-number" min="0" max="12" value="0"/>
         </div>
         <div>
             <label for="max-player-number">Massimo Giocatori</label>
         </div>
         <div>
             <input formControlName="maxPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="max-player-number"
-                name="max-player-number" min="1" max="9" value="9"/>
+                name="max-player-number" min="0" max="12" value="0"/>
         </div>
     </div>
 
@@ -38,8 +38,8 @@
     </div>
 
     <div>
-        <button class="block w-1/5 m-auto border rounded-md hover:bg-stone-300 hover:cursor-pointer" type="submit"
-            id="filter-button">
+        <button class="block w-1/5 m-auto border rounded-md enabled:hover:bg-stone-300 enabled:hover:cursor-pointer disabled:cursor-not-allowed" type="submit"
+            id="filter-button" [disabled]="!form.valid">
             Filtra
             <i class="fa-solid fa-filter"></i>
         </button>

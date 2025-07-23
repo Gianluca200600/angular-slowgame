@@ -1,9 +1,9 @@
 @if (gamesInput()) {
+    <p>Trovati {{gamesInput()?.length}} risultati</p>
+
     <section id="results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
         @for (game of gamesInput(); track $index) {
         <app-game-card [gameInput]="game"> </app-game-card>
         }
     </section>
-} @else {
-<p> No search initiated. </p>
 }

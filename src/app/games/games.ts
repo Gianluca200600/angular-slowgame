@@ -10,7 +10,7 @@ import { Game } from '../model/game';
   styleUrl: './games.css'
 })
 export class Games {
-  gamesSignal = signal<Game[]>([]);
+  gamesSignal = signal<Game[] | undefined>(undefined);
 
   onFilter(games: Game[]) {
     console.log('Games component received filtered games:', games);

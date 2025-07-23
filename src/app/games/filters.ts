@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameFilters } from '../model/game-filters';
 import { output } from '@angular/core';
 import { Game } from '../model/game';
@@ -16,12 +16,24 @@ export class Filters {
   gamesOutput = output<Game[]>();
   searchService: SearchService;
 
+  formValidator = (group: AbstractControl) => {
+    const minPlayers = group.get('minPlayerNumber')?.value;
+    const maxPlayers = group.get('maxPlayerNumber')?.value;
+
+    if (minPlayers !== 0 && maxPlayers !== 0 && minPlayers > maxPlayers) {
+      return { playerRangeError: true };
+    }
+    return null;
+  };
+
   form = new FormGroup({
     gameName: new FormControl(''),
     minPlayerNumber: new FormControl(0),
     maxPlayerNumber: new FormControl(0),
-    playingTime: new FormControl('')
-  });
+    playingTime: new FormControl(''),
+    mechanics: new FormArray([]),
+    mechanic: new FormControl('')
+  }, this.formValidator);
 
   onSubmit() {
     const rawValues = this.form.value;
