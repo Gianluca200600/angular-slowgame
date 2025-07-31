@@ -1,7 +1,8 @@
 <form [formGroup]="form" (submit)="onSubmit()">
     <div>
         <div>
-            <input formControlName="gameName" class="w-full border rounded-md pl-2" type="text" id="name" name="name" placeholder="Cerca un gioco">
+            <input formControlName="gameName" class="w-full border rounded-md pl-2" type="text" id="name" name="name"
+                placeholder="Cerca un gioco">
         </div>
     </div>
 
@@ -10,15 +11,15 @@
             <label for="min-player-number">Minimo Giocatori</label>
         </div>
         <div>
-            <input formControlName="minPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="min-player-number"
-                name="min-player-number" min="0" max="12" value="0"/>
+            <input formControlName="minPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer"
+                id="min-player-number" name="min-player-number" min="0" max="12" value="0" />
         </div>
         <div>
             <label for="max-player-number">Massimo Giocatori</label>
         </div>
         <div>
-            <input formControlName="maxPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer" id="max-player-number"
-                name="max-player-number" min="0" max="12" value="0"/>
+            <input formControlName="maxPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer"
+                id="max-player-number" name="max-player-number" min="0" max="12" value="0" />
         </div>
     </div>
 
@@ -27,7 +28,8 @@
             <label for="playing-time">Durata</label>
         </div>
         <div>
-            <select formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time" name="playing-time">
+            <select formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time"
+                name="playing-time">
                 <option value="0">Qualsiasi</option>
                 <option value="1">Meno di 30 minuti</option>
                 <option value="2">30-60 minuti</option>
@@ -37,9 +39,34 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
+        <div>
+            <label for="mechanics">Meccaniche</label>
+        </div>
+        <div formArrayName="mechanics">
+            @for (mechanicControl of getMechanicFormArray().controls; track $index; let i = $index) {
+                <div>
+                    <select [formControlName]="i" class="border rounded-md hover:cursor-pointer" id="mechanics"
+                        name="mechanics">
+                        @for (mechanic of mechanics$ | async; track mechanic.id) {
+                            <option [value]="mechanic.id">{{ mechanic.name }}</option>
+                        }
+                    </select>
+                </div>
+            }
+        </div>
+        <div>
+            <button type="button" class="border rounded-md hover:cursor-pointer" (click)="addMechanic()">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                Aggiungi Meccanica
+            </button>
+        </div>
+    </div>
+
     <div>
-        <button class="block w-1/5 m-auto border rounded-md enabled:hover:bg-stone-300 enabled:hover:cursor-pointer disabled:cursor-not-allowed" type="submit"
-            id="filter-button" [disabled]="!form.valid">
+        <button
+            class="block w-1/5 m-auto border rounded-md enabled:hover:bg-stone-300 enabled:hover:cursor-pointer disabled:cursor-not-allowed"
+            type="submit" id="filter-button" [disabled]="!form.valid">
             Filtra
             <i class="fa-solid fa-filter"></i>
         </button>

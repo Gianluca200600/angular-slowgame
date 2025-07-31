@@ -3,4 +3,5 @@ export class GameFilters {
     minPlayers: number | null = 0;
     maxPlayers: number | null = 0;
     playingTime: string | null = '';
+    mechanics: string[] = [];
 }
