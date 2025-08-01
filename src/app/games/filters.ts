@@ -10,6 +10,8 @@ import { map, tap } from 'rxjs';
 import { Mechanic } from '../model/mechanic';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { Genre } from '../model/genre';
+import { GenreService } from '../model/genre-service';
 
 @Component({
   selector: 'app-filters',
@@ -23,9 +25,14 @@ export class Filters {
   gamesOutput = output<Game[]>();
   searchService: SearchService = inject(SearchService);
   mechanicService: MechanicService = inject(MechanicService);
+  genreService: GenreService = inject(GenreService);
 
   mechanics$ = this.mechanicService.getMechanics().pipe(
-    map (m => m.sort((a, b) => a.name.localeCompare(b.name)))
+    map(m => m.sort((a, b) => a.name.localeCompare(b.name)))
+  );
+
+  genres$ = this.genreService.getGenres().pipe(
+    map(g => g.sort((a, b) => a.name.localeCompare(b.name)))
   );
 
   formValidator = (group: AbstractControl) => {
@@ -44,6 +51,7 @@ export class Filters {
     maxPlayerNumber: new FormControl(0),
     playingTime: new FormControl(''),
     mechanics: new FormArray([]),
+    genres: new FormArray([])
   }, this.formValidator);
 
   getMechanicFormArray(): FormArray {
@@ -55,16 +63,26 @@ export class Filters {
     this.getMechanicFormArray().push(mechanicControl);
   }
 
+  getGenreFormArray(): FormArray {
+    return this.form.get('genres') as FormArray;
+  }
+
+  addGenre() {
+    const genreControl = new FormControl('');
+    this.getGenreFormArray().push(genreControl);
+  }
+
   onSubmit() {
     const rawValues = this.form.value;
     const formValues: GameFilters = {
       name: rawValues.gameName ?? null,
       minPlayers: rawValues.minPlayerNumber ?? null,
       maxPlayers: rawValues.maxPlayerNumber ?? null,
-      playingTime: rawValues.playingTime ?? null,
-      mechanics: rawValues.mechanics ?? []
+      playingTime: rawValues.playingTime !== '' && rawValues.playingTime !== null ? Number(rawValues.playingTime) : null,
+      mechanics: rawValues.mechanics ?? [],
+      genres: rawValues.genres ?? []
     };
-    console.log('Form submitted:', formValues);
+
     this.searchService.search(formValues).subscribe(
       data => {
         this.gamesOutput.emit(data);

@@ -25,17 +25,11 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
         <div>
-            <label for="playing-time">Durata</label>
+            <label for="playing-time">Durata Massima (in minuti)</label>
         </div>
         <div>
-            <select formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time"
-                name="playing-time">
-                <option value="0">Qualsiasi</option>
-                <option value="1">Meno di 30 minuti</option>
-                <option value="2">30-60 minuti</option>
-                <option value="3">60-120 minuti</option>
-                <option value="4">Più di 120 minuti</option>
-            </select>
+            <input type="number" formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time"
+                name="playing-time" min="0">
         </div>
     </div>
 
@@ -59,6 +53,30 @@
             <button type="button" class="border rounded-md hover:cursor-pointer" (click)="addMechanic()">
                 <fa-icon [icon]="faPlus"></fa-icon>
                 Aggiungi Meccanica
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
+        <div>
+            <label for="genres">Generi</label>
+        </div>
+        <div formArrayName="genres">
+            @for (genreControl of getGenreFormArray().controls; track $index; let i = $index) {
+                <div>
+                    <select [formControlName]="i" class="border rounded-md hover:cursor-pointer" id="genres"
+                        name="genres">
+                        @for (genre of genres$ | async; track genre.id) {
+                            <option [value]="genre.id">{{ genre.name }}</option>
+                        }
+                    </select>
+                </div>
+            }
+        </div>
+        <div>
+            <button type="button" class="border rounded-md hover:cursor-pointer" (click)="addGenre()">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                Aggiungi Genere
             </button>
         </div>
     </div>

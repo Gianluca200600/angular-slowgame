@@ -48,12 +48,16 @@ export class SearchService {
             const nameFilter = filters.name?.toLowerCase() || "";
             const minPlayerNumberFilter = filters.minPlayers;
             const maxPlayerNumberFilter = filters.maxPlayers;
-            const playingTimeFilter = filters.playingTime?.toLowerCase();
+            const playingTimeFilter = filters.playingTime;
             const mechanicsFilter = filters.mechanics;
+            const genresFilter = filters.genres;
 
+            // Filtering for name
             if (nameFilter && !game.name.toLowerCase().includes(nameFilter)) {
               return false;
             }
+
+            // Filtering for player numbers
             if (minPlayerNumberFilter && minPlayerNumberFilter !== 0 && maxPlayerNumberFilter && maxPlayerNumberFilter !== 0) {
               if (game.minPlayers > maxPlayerNumberFilter || game.maxPlayers > maxPlayerNumberFilter || game.maxPlayers < minPlayerNumberFilter) {
                 return false;
@@ -62,6 +66,13 @@ export class SearchService {
                 return false;
               }
             }
+
+            // Filtering for playing time
+            if (playingTimeFilter && playingTimeFilter !== 0 && game.playingTime > playingTimeFilter) {
+              return false;
+            }
+
+            // Filtering for mechanics
             if (mechanicsFilter && mechanicsFilter.length > 0) {
               if (!game.mechanics || game.mechanics.length === 0) {
                 return false;
@@ -72,6 +83,20 @@ export class SearchService {
                 }
               }
             }
+
+            // Filtering for genres
+            if (genresFilter && genresFilter.length > 0) {
+              if (!game.genres || game.genres.length === 0) {
+                return false;
+              }
+              for (const genreFilter of genresFilter) {
+                if (!game.genres.map(m => m.id).includes(genreFilter)) {
+                  return false;
+                }
+              }
+            }
+
+            // If all filters passed, include the game
             return true;
           });
           filteredGames.sort(

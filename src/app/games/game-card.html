@@ -13,16 +13,23 @@
         <div>
             <p>
                 <fa-icon [icon]="faClock"></fa-icon>
-                {{gameInput()!.playingTime}}
+                {{gameInput()!.playingTime}}'
             </p>
         </div>
         <div>
-            <p>
-                <fa-icon [icon]="faUser"></fa-icon>
-                {{gameInput()!.minPlayers}}
-                <span> - </span>
-                {{gameInput()!.maxPlayers}}
-            </p>
+            @if (gameInput()!.minPlayers !== gameInput()!.maxPlayers) {
+                <p>
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{gameInput()!.minPlayers}}
+                    <span> - </span>
+                    {{gameInput()!.maxPlayers}}
+                </p>
+            } @else {
+                <p>
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{gameInput()!.minPlayers}}
+                </p>
+            }
         </div>
     </footer>
 </div>
