@@ -4,40 +4,15 @@ import { Game } from './game';
 import { map, Observable } from 'rxjs';
 import { GameFilters } from './game-filters';
 import { collection, collectionData, DocumentData, Firestore, FirestoreDataConverter, QueryDocumentSnapshot } from '@angular/fire/firestore';
-import { idToken } from '@angular/fire/auth';
+import { GameService } from './game-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  readonly gameConverter: FirestoreDataConverter<Game> = {
-    toFirestore(mechanic: Game): any {
-      return null;
-    },
-
-    fromFirestore(snapshot: QueryDocumentSnapshot<DocumentData>, options: any): Game {
-      
-      const {mechanics, genres, ...rest} = snapshot.data();
-      return {
-        ...rest,
-        mechanics: (snapshot.data()['mechanics'] || []).map((m: any) => ({
-          bgg_id: m.bgg_id,
-          name: m.name,
-          id: m.id.id
-        })),
-        genres: (snapshot.data()['genres'] || []).map((m: any) => ({
-          bgg_id: m.bgg_id,
-          name: m.name,
-          id: m.id.id
-        }))
-      } as Game;
-    }
-  }
-
-  firestore = inject(Firestore);
-  gamesCollection = collection(this.firestore, 'games');
-  public games$ = collectionData(this.gamesCollection.withConverter(this.gameConverter)) as Observable<Game[]>;
+  gameService = inject(GameService);
+  games$ = this.gameService.getGames();
 
   search(filters: GameFilters): Observable<Game[]> {
     return this.games$.pipe(
