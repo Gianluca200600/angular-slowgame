@@ -1,92 +1,157 @@
 <form [formGroup]="form" (submit)="onSubmit()">
-    <div>
-        <div>
-            <input formControlName="gameName" class="w-full border rounded-md pl-2" type="text" id="name" name="name"
-                placeholder="Cerca un gioco">
-        </div>
-    </div>
+    <div class="max-w-6xl mx-auto px-4 py-4">
+        <h1 class="text-3xl font-bold mb-6 text-center">Cerca un gioco</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
-        <div>
-            <label for="min-player-number">Minimo Giocatori</label>
-        </div>
-        <div>
-            <input formControlName="minPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer"
-                id="min-player-number" name="min-player-number" min="0" max="12" value="0" />
-        </div>
-        <div>
-            <label for="max-player-number">Massimo Giocatori</label>
-        </div>
-        <div>
-            <input formControlName="maxPlayerNumber" type="number" class="border rounded-md hover:cursor-pointer"
-                id="max-player-number" name="max-player-number" min="0" max="12" value="0" />
-        </div>
-    </div>
+        <!-- Filtri principali -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-2">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
-        <div>
-            <label for="playing-time">Durata Massima (in minuti)</label>
-        </div>
-        <div>
-            <input type="number" formControlName="playingTime" class="border rounded-md hover:cursor-pointer" id="playing-time"
-                name="playing-time" min="0">
-        </div>
-    </div>
+            <!-- Campo di ricerca -->
+            <input formControlName="gameName" type="text" id="name" name="name" placeholder="Cerca per nome..."
+                class="text-gray-500 col-span-1 md:col-span-2 border border-gray-300 p-2 rounded shadow-sm">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
-        <div>
-            <label for="mechanics">Meccaniche</label>
-        </div>
-        <div formArrayName="mechanics">
-            @for (mechanicControl of getMechanicFormArray().controls; track $index; let i = $index) {
-                <div>
-                    <select [formControlName]="i" class="border rounded-md hover:cursor-pointer" id="mechanics"
-                        name="mechanics">
-                        @for (mechanic of mechanics$ | async; track mechanic.id) {
-                            <option [value]="mechanic.id">{{ mechanic.name }}</option>
-                        }
-                    </select>
+            <!-- Numero di giocatori -->
+            <!-- Bottone che apre il popover -->
+            <div class="relative">
+                <button (click)="togglePlayersPopover()" type="button"
+                    class="w-full border border-gray-300 p-2 rounded text-left flex justify-between items-center shadow-sm">
+                    <span>Giocatori</span>
+                    <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Popover Giocatori -->
+                @if (showPlayersPopover) {
+                <div
+                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-4 h-30">
+                    <label class="block text-center font-bold text-gray-700 mb-1 p-2">Numero di giocatori</label>
+                    <div class="flex items-center gap-2">
+                        <input formControlName="minPlayerNumber" type="number"
+                            class="w-full border border-gray-300 rounded p-1 text-center placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            id="min-player-number" name="min-player-number" min="0" max="12" value="0">
+                        <span class="text-gray-500">—</span>
+                        <input formControlName="maxPlayerNumber" type="number"
+                            class="w-full border border-gray-300 rounded p-1 text-center placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            id="max-player-number" name="max-player-number" min="0" max="12" value="0">
+                    </div>
                 </div>
-            }
+                }
+            </div>
+
+
+            <!-- Durata -->
+            <div class="relative">
+                <button (click)="toggleDurationPopover()" type="button"
+                    class="w-full border border-gray-300 p-2 rounded text-left flex justify-between items-center shadow-sm">
+                    <span>Durata</span>
+                    <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Popover Durata -->
+                @if (showDurationPopover) {
+                <div
+                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-7 h-30">
+                    <label class="block text-center font-bold text-gray-700 mb-2">Tempo in minuti</label>
+                    <div class="flex items-center gap-2">
+                        <input formControlName="playingTime" type="number"
+                            class="w-full border border-gray-300 rounded p-2 placeholder:text-gray-500 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            id="playing-time" name="playing-time" min="0" placeholder="Durata massima">
+                    </div>
+                </div>
+                }
+            </div>
+
         </div>
-        <div>
-            <button type="button" class="border rounded-md hover:cursor-pointer" (click)="addMechanic()">
-                <fa-icon [icon]="faPlus"></fa-icon>
-                Aggiungi Meccanica
+
+        <!-- Pulsante per mostrare filtri avanzati -->
+        <div class="mb-6 flex justify-center">
+            <button (click)="toggleAdvancedFilters()"
+                class="px-4 py-0 flex items-center gap-2 text-sm text-gray-700 border-b border-gray-300 bg-none shadow-gray-300 shadow-[0px_2px_2px_0px] hover:shadow-slowOrange-400 rounded-full transition-all duration-200 backdrop-blur-sm">
+                <span>Filtri avanzati</span>
+                <svg [class.rotate-180]="showAdvancedFilters" class="w-4 h-4 transition-transform duration-300"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
             </button>
         </div>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4">
-        <div>
-            <label for="genres">Generi</label>
-        </div>
-        <div formArrayName="genres">
-            @for (genreControl of getGenreFormArray().controls; track $index; let i = $index) {
-                <div>
-                    <select [formControlName]="i" class="border rounded-md hover:cursor-pointer" id="genres"
-                        name="genres">
-                        @for (genre of genres$ | async; track genre.id) {
+        @if (showAdvancedFilters) {
+        <!-- Filtri avanzati (genere, meccaniche) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center mb-6 max-w-6xl mx-auto">
+
+            <!-- Generi -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4 border-b border-slowOrange-600 shadow-lg rounded-lg p-4">
+
+                <div class="flex items-center justify-between md:col-span-2">
+                    <label for="genres" class="text-lg font-semibold text-gray-800">Generi</label>
+                    <button type="button"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-full text-white bg-slowOrange-500 hover:bg-slowOrange-600 shadow-sm transition-colors"
+                        (click)="addGenre()">
+                        <fa-icon [icon]="faPlus" class="text-sm"></fa-icon>
+                        <span class="hidden text-sm font-medium sm:inline">Aggiungi</span>
+                    </button>
+                </div>
+
+                <div formArrayName="genres" class="md:col-span-2 space-y-2">
+                    @for (genreControl of getGenreFormArray().controls; track $index; let i = $index) {
+                    <div>
+                        <select [formControlName]="i"
+                            class="w-full border border-gray-300 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-slowOrange-400"
+                            id="genres" name="genres">
+                            @for (genre of genres$ | async; track genre.id) {
                             <option [value]="genre.id">{{ genre.name }}</option>
-                        }
-                    </select>
+                            }
+                        </select>
+                    </div>
+                    }
                 </div>
-            }
-        </div>
-        <div>
-            <button type="button" class="border rounded-md hover:cursor-pointer" (click)="addGenre()">
-                <fa-icon [icon]="faPlus"></fa-icon>
-                Aggiungi Genere
-            </button>
-        </div>
-    </div>
 
-    <div>
+            </div>
+
+
+            <!-- Meccaniche -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 md:gap-4 my-2 md:my-4 border-b border-slowOrange-600 shadow-lg rounded-lg p-4">
+
+                <div class="flex items-center justify-between md:col-span-2">
+                    <label for="mechanics" class="text-lg font-semibold text-gray-800">Meccaniche</label>
+                    <button type="button"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-full text-white bg-slowOrange-500 hover:bg-slowOrange-600 shadow-sm transition-colors"
+                        (click)="addMechanic()">
+                        <fa-icon [icon]="faPlus" class="text-sm"></fa-icon>
+                        <span class="hidden text-sm font-medium sm:inline">Aggiungi</span>
+                    </button>
+                </div>
+
+                <div formArrayName="mechanics" class="md:col-span-2 space-y-2">
+                    @for (mechanicsControl of getMechanicFormArray().controls; track $index; let i = $index) {
+                    <div>
+                        <select [formControlName]="i"
+                            class="w-full border border-gray-300 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-slowOrange-400"
+                            id="mechanics" name="mechanics">
+                            @for (mechanic of mechanics$ | async; track mechanic.id) {
+                            <option [value]="mechanic.id">{{ mechanic.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+        }
+
         <button
-            class="block w-1/5 m-auto border rounded-md enabled:hover:bg-stone-300 enabled:hover:cursor-pointer disabled:cursor-not-allowed"
+            class="px-2 py-1 flex items-center gap-2 rounded-full border border-slowOrange-500 text-slowOrange-500
+            bg-transparent hover:bg-slowOrange-50 transition-colors" (click)="resetFilters()"
             type="submit" id="filter-button" [disabled]="!form.valid">
-            Filtra
-            <i class="fa-solid fa-filter"></i>
+            <fa-icon [icon]="faFilter" class="text-sm"></fa-icon>
+            <span class="text-sm font-medium">Filtra</span>
         </button>
+        
     </div>
 </form>

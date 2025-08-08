@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameFilters } from '../model/game-filters';
 import { output } from '@angular/core';
@@ -6,11 +6,9 @@ import { Game } from '../model/game';
 import { SearchService } from '../model/search-service';
 import { MechanicService } from '../model/mechanic-service';
 import { AsyncPipe } from '@angular/common';
-import { map, tap } from 'rxjs';
-import { Mechanic } from '../model/mechanic';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { map } from 'rxjs';
+import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { Genre } from '../model/genre';
 import { GenreService } from '../model/genre-service';
 
 @Component({
@@ -22,10 +20,17 @@ import { GenreService } from '../model/genre-service';
 export class Filters {
 
   faPlus = faPlus;
+  faFilter = faFilter;
+  showAdvancedFilters: boolean = false;
+  showPlayersPopover = false;
+  showDurationPopover = false;
+
   gamesOutput = output<Game[]>();
   searchService: SearchService = inject(SearchService);
   mechanicService: MechanicService = inject(MechanicService);
   genreService: GenreService = inject(GenreService);
+
+  formOriginalValue: any;
 
   mechanics$ = this.mechanicService.getMechanics().pipe(
     map(m => m.sort((a, b) => a.name.localeCompare(b.name)))
@@ -53,6 +58,10 @@ export class Filters {
     mechanics: new FormArray([]),
     genres: new FormArray([])
   }, this.formValidator);
+
+  onInit() {
+    this.formOriginalValue = this.form.getRawValue();
+  }
 
   getMechanicFormArray(): FormArray {
     return this.form.get('mechanics') as FormArray;
@@ -89,5 +98,24 @@ export class Filters {
       }
     );
   }
+
+  toggleAdvancedFilters() {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
+
+  togglePlayersPopover() {
+    this.showPlayersPopover = !this.showPlayersPopover;
+  }
+
+  toggleDurationPopover() {
+    this.showDurationPopover = !this.showDurationPopover;
+  }
+
+  resetFilters() {
+    setTimeout(() => {
+      this.form.reset(this.formOriginalValue);
+    });
+  }
+
 
 }

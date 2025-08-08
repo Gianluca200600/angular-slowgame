@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+
+    --color-slowOrange-50: #fffaf5;
+    --color-slowOrange-100: #fef1e4;
+    --color-slowOrange-200: #fbd9ba;
+    --color-slowOrange-300: #f9ba88;
+    --color-slowOrange-400: #f59a52;
+    --color-slowOrange-500: #f28c38;
+    --color-slowOrange-600: #db722b;
+    --color-slowOrange-700: #b45823;
+    --color-slowOrange-800: #8c431c;
+    --color-slowOrange-900: #6f3517;
+
+};

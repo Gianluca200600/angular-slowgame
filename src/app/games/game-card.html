@@ -1,38 +1,38 @@
 @if (gameInput()) {
-<div class="border grid p-2 bg-neutral-100">
-    <header class="flex gap-2 items-center">
-        <img class="w-20 h-20 object-cover rounded-md" [src]="gameInput()!.thumbnail" alt="{{gameInput()!.name}}">
-        <h4 class="text-2xl font-bold font-[Roboto_Slab]">
-            <a [routerLink]="['/game',gameInput()!.id]">{{gameInput()!.name}}</a>
-        </h4>
-    </header>
-    <main>
-        <p class="max-h-[200px] my-2 overflow-auto whitespace-pre-wrap text-sm" [innerHTML]="gameInput()!.description" >
-        </p>
-    </main>
-
-    <footer class="flex justify-between items-center">
-        <div>
-            <p>
-                <fa-icon [icon]="faClock"></fa-icon>
-                {{gameInput()!.playingTime}}'
-            </p>
-        </div>
-        <div>
-            @if (gameInput()!.minPlayers !== gameInput()!.maxPlayers) {
-                <p>
-                    <fa-icon [icon]="faUser"></fa-icon>
-                    {{gameInput()!.minPlayers}}
-                    <span> - </span>
-                    {{gameInput()!.maxPlayers}}
-                </p>
-            } @else {
-                <p>
-                    <fa-icon [icon]="faUser"></fa-icon>
-                    {{gameInput()!.minPlayers}}
-                </p>
-            }
-        </div>
-    </footer>
-</div>
+    <div class="bg-neutral-100 border border-gray-200 rounded-xl shadow hover:shadow-lg transition w-80 h-85">
+        <header>
+            <img [src]="gameInput()!.thumbnail" alt="{{gameInput()!.name}}"
+                class="w-full h-48 object-cover rounded-t-xl">
+        </header>
+        <main class="p-4">
+            <h4 class="text-2xl font-bold font-[Roboto_Slab] line-clamp-1">
+                <a [routerLink]="['/game',gameInput()!.id]">{{gameInput()!.name}}</a>
+            </h4>
+            <p class="text-sm text-gray-600 mt-1 line-clamp-3" [innerHTML]="gameInput()!.description"></p>
+            <footer class="mt-2 text-xs text-gray-500 text-right">
+                <span>
+                    <span>
+                        <fa-icon [icon]="faClock"></fa-icon>
+                        {{gameInput()!.playingTime}}'
+                    </span>
+                </span>
+                <span> · </span>
+                <span>
+                    @if (gameInput()!.minPlayers !== gameInput()!.maxPlayers) {
+                    <span>
+                        <fa-icon [icon]="faUser"></fa-icon>
+                        {{gameInput()!.minPlayers}}
+                        <span> - </span>
+                        {{gameInput()!.maxPlayers}}
+                    </span>
+                    } @else {
+                    <span>
+                        <fa-icon [icon]="faUser"></fa-icon>
+                        {{gameInput()!.minPlayers}}
+                    </span>
+                    }
+                </span>
+            </footer>
+        </main>
+    </div>
 }
