@@ -1,5 +1,56 @@
 @if (gameSignal()) {
-    <p>
-        {{gameSignal()!.name}} trovato.
-    </p>
+<main class="max-w-4xl mx-auto py-8 px-4">
+    <!-- Titolo e immagine -->
+    <div class="flex flex-col sm:flex-row items-start gap-6 mb-6">
+
+        <!-- Immagine quadrata -->
+        <img [src]="gameSignal()?.thumbnail" alt="{{gameSignal()?.name}}"
+            class="w-40 h-40 object-cover rounded-lg shadow-md flex-shrink-0">
+
+        <!-- Titolo e info -->
+        <div>
+            <h1 class="text-4xl font-bold mb-2 py-2">{{gameSignal()?.name}}</h1>
+            <div class="flex flex-wrap gap-4 text-gray-700 text-sm">
+                <div>
+                    <fa-icon [icon]="faClock"></fa-icon>
+                    {{gameSignal()?.playingTime}} min
+                </div>
+                <div>
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{gameSignal()?.minPlayers}} – {{gameSignal()?.maxPlayers}}
+                </div>
+            </div>
+
+            <section class="py-3">
+                <div class="py-1">
+                    <ul class="flex flex-wrap gap-2">
+                        @for (genre of gameSignal()?.genres; track genre) {
+                        <li class="bg-slowOrange-400 text-gray-800 px-3 rounded-full text-sm">
+                            {{genre.name}}
+                            <fa-icon [icon]="faTags" class="text-xs"></fa-icon>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                <div class="py-1">
+                    <ul class="flex flex-wrap gap-2">
+                        @for (mechanic of gameSignal()?.mechanics; track mechanic) {
+                        <li class="bg-teal-400 text-gray-800 px-3 rounded-full text-sm">
+                            {{mechanic.name}}
+                            <fa-icon [icon]="faCogs" class="text-xs"></fa-icon>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Sezioni descritte in schede -->
+    <section class="mb-6 py-3">
+        <h2 class="text-2xl font-semibold mb-2">Descrizione</h2>
+        <p class="text-gray-800 leading-relaxed">{{gameSignal()?.description}}</p>
+    </section>
+
+</main>
 }
