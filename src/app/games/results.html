@@ -2,7 +2,7 @@
 <div class="max-w-6xl mx-auto px-4 py-2">
     <p>Trovati {{gamesInput()?.length}} risultati</p>
 
-    <section id="results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4 place-items-center">
+    <section id="results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-4 place-items-center">
         @for (game of gamesInput(); track $index) {
         <app-game-card [gameInput]="game"> </app-game-card>
         }

@@ -1,6 +1,5 @@
 <form [formGroup]="form" (submit)="onSubmit()">
     <div class="max-w-6xl mx-auto px-4 py-4">
-        <h1 class="text-3xl font-bold mb-6 text-center">Cerca un gioco</h1>
 
         <!-- Filtri principali -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-2">
@@ -147,7 +146,7 @@
 
         <button
             class="px-2 py-1 flex items-center gap-2 rounded-full border border-slowOrange-500 text-slowOrange-500
-            bg-transparent hover:bg-slowOrange-50 transition-colors" (click)="resetFilters()"
+            bg-transparent hover:bg-slowOrange-50 transition-colors"
             type="submit" id="filter-button" [disabled]="!form.valid">
             <fa-icon [icon]="faFilter" class="text-sm"></fa-icon>
             <span class="text-sm font-medium">Filtra</span>

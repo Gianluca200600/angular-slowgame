@@ -111,11 +111,4 @@ export class Filters {
     this.showDurationPopover = !this.showDurationPopover;
   }
 
-  resetFilters() {
-    setTimeout(() => {
-      this.form.reset(this.formOriginalValue);
-    });
-  }
-
-
 }
