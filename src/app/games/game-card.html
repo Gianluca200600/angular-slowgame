@@ -20,14 +20,14 @@
                 <span>
                     @if (gameInput()!.minPlayers !== gameInput()!.maxPlayers) {
                     <span>
-                        <fa-icon [icon]="faUser"></fa-icon>
+                        <fa-icon [icon]="faUsers"></fa-icon>
                         {{gameInput()!.minPlayers}}
                         <span> - </span>
                         {{gameInput()!.maxPlayers}}
                     </span>
                     } @else {
                     <span>
-                        <fa-icon [icon]="faUser"></fa-icon>
+                        <fa-icon [icon]="faUsers"></fa-icon>
                         {{gameInput()!.minPlayers}}
                     </span>
                     }
