@@ -41,10 +41,10 @@ export class Filters {
   );
 
   formValidator = (group: AbstractControl) => {
-    const minPlayers = group.get('minPlayerNumber')?.value;
-    const maxPlayers = group.get('maxPlayerNumber')?.value;
+    const minPlayers = group.get('minPlayerNumber')?.value || 0;
+    const maxPlayers = group.get('maxPlayerNumber')?.value || 99;
 
-    if (minPlayers !== 0 && maxPlayers !== 0 && minPlayers > maxPlayers) {
+    if (minPlayers > maxPlayers && maxPlayers !== 0) {
       return { playerRangeError: true };
     }
     return null;

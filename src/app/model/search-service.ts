@@ -21,8 +21,8 @@ export class SearchService {
           const filteredGames = data.filter(game => {
 
             const nameFilter = filters.name?.toLowerCase() || "";
-            const minPlayerNumberFilter = filters.minPlayers;
-            const maxPlayerNumberFilter = filters.maxPlayers;
+            let minPlayerNumberFilter = filters.minPlayers;
+            let maxPlayerNumberFilter = filters.maxPlayers;
             const playingTimeFilter = filters.playingTime;
             const mechanicsFilter = filters.mechanics;
             const genresFilter = filters.genres;
@@ -33,11 +33,17 @@ export class SearchService {
             }
 
             // Filtering for player numbers
-            if (minPlayerNumberFilter && minPlayerNumberFilter !== 0 && maxPlayerNumberFilter && maxPlayerNumberFilter !== 0) {
+            minPlayerNumberFilter = minPlayerNumberFilter || 0;
+            maxPlayerNumberFilter = maxPlayerNumberFilter || 99;
+
+            console.log("Filters: minPlayers=" + minPlayerNumberFilter + ", maxPlayers=" + maxPlayerNumberFilter);
+            if (minPlayerNumberFilter && maxPlayerNumberFilter) {
               if (game.minPlayers > maxPlayerNumberFilter || game.maxPlayers > maxPlayerNumberFilter || game.maxPlayers < minPlayerNumberFilter) {
+                console.log("if 1");
                 return false;
               }
               if (minPlayerNumberFilter > maxPlayerNumberFilter) {
+                console.log("if 2");
                 return false;
               }
             }
