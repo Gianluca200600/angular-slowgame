@@ -7,8 +7,8 @@ import { SearchService } from '../model/search-service';
 import { MechanicService } from '../model/mechanic-service';
 import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs';
-import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { faFilter, faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { GenreService } from '../model/genre-service';
 
 @Component({
@@ -18,6 +18,9 @@ import { GenreService } from '../model/genre-service';
   styleUrl: './filters.css'
 })
 export class Filters {
+
+  private readonly lib = inject(FaIconLibrary);
+  constructor() { this.lib.addIcons(faUsers, faPlus, faFilter); }
 
   faPlus = faPlus;
   faFilter = faFilter;
