@@ -5,10 +5,7 @@
   const compute = () => {
     const el = document.documentElement;
     const body = document.body;
-    return Math.max(
-      el.scrollHeight, el.offsetHeight, el.clientHeight,
-      body ? Math.max(body.scrollHeight, body.offsetHeight, body.clientHeight) : 0
-    );
+    return body.scrollHeight;
   };
 
   const post = () => {
