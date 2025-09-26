@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { input } from '@angular/core';
 import { Game } from '../model/game';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUsers, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faClock, faTags } from '@fortawesome/free-solid-svg-icons';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -15,4 +15,5 @@ export class GameCard {
   gameInput = input<Game>();
   faUsers = faUsers;
   faClock = faClock;
+  faTags = faTags;
 }
