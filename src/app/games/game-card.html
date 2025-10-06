@@ -3,19 +3,19 @@
          transition w-full h-20 my-1 flex flex-row">
 
     <!-- Thumbnail -->
-    <div class="basis-1/15 max-h-20 h-full flex items-left justify-left p-2">
+    <div class="basis-3/15 md:basis-1/15 max-h-20 h-full flex items-left justify-left p-2">
         <img [src]="gameInput()!.thumbnail" alt="{{gameInput()!.name}}" class="w-full object-cover rounded-xl" />
     </div>
 
     <!-- Titolo -->
-    <div class="basis-6/15 flex items-center px-3 h-full items-center">
+    <div class="basis-8/15 md:basis-6/15 flex items-center px-3 h-full items-center">
         <h4 class="text-2xl font-bold font-[Roboto_Slab] line-clamp-1">
             <a [routerLink]="['/game',gameInput()!.id]">{{gameInput()!.name}}</a>
         </h4>
     </div>
 
     <!-- Tag -->
-    <div class="basis-6/15 flex items-center p-4">
+    <div class="hidden md:flex md:basis-6/15 items-center p-4">
         <div class="flex flex-wrap gap-2">
             @for (genre of gameInput()!.genres; track genre.id) {
             <span
@@ -28,15 +28,17 @@
     </div>
 
     <!-- Info -->
-    <div class="basis-2/15 h-full p-4 flex items-end mt-2 text-xs text-gray-500 place-content-end">
-        <span>
+    <div class="basis-4/15 md:basis-2/15 h-full p-4 lg:flex items-end mt-2 text-xs text-gray-500 place-content-end">
+        <span class="flex place-content-end">
             <span>
                 <fa-icon [icon]="faClock"></fa-icon>
                 {{gameInput()!.playingTime}}'
             </span>
         </span>
-        <span class="px-2"> · </span>
-        <span>
+        <span class="px-2 hidden lg:inline"> · </span>
+        <div class="lg:hidden">
+        </div>
+        <span class="flex place-content-end">
             @if (gameInput()!.minPlayers !== gameInput()!.maxPlayers) {
             <span>
                 <fa-icon [icon]="faUsers"></fa-icon>
