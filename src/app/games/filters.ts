@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameFilters } from '../model/game-filters';
 import { output } from '@angular/core';
@@ -24,9 +24,12 @@ export class Filters {
 
   faPlus = faPlus;
   faFilter = faFilter;
-  showAdvancedFilters: boolean = false;
-  showPlayersPopover = false;
-  showDurationPopover = false;
+  showAdvancedFilters = signal(false); 
+  showPlayersPopover = signal(false);
+  showDurationPopover = signal(false);
+  showBackdrop = computed(
+    () => this.showPlayersPopover() || this.showDurationPopover()
+  );
 
   gamesOutput = output<Game[]>();
   searchService: SearchService = inject(SearchService);
@@ -103,15 +106,20 @@ export class Filters {
   }
 
   toggleAdvancedFilters() {
-    this.showAdvancedFilters = !this.showAdvancedFilters;
+    this.showAdvancedFilters.set(!this.showAdvancedFilters());
   }
 
   togglePlayersPopover() {
-    this.showPlayersPopover = !this.showPlayersPopover;
+    this.showPlayersPopover.set(!this.showPlayersPopover());
   }
 
   toggleDurationPopover() {
-    this.showDurationPopover = !this.showDurationPopover;
+    this.showDurationPopover.set(!this.showDurationPopover());
   }
 
+  removeBackdrop() {
+    this.showPlayersPopover.set(false);
+    this.showDurationPopover.set(false);
+  }
+ 
 }

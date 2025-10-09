@@ -20,9 +20,9 @@
                 </button>
 
                 <!-- Popover Giocatori -->
-                @if (showPlayersPopover) {
+                @if (showPlayersPopover()) {
                 <div
-                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-4 h-30">
+                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-4 h-30 z-3">
                     <label class="block text-center font-bold text-gray-700 mb-1 p-2">Numero di giocatori</label>
                     <div class="flex items-center gap-2">
                         <input formControlName="minPlayerNumber" type="number"
@@ -49,9 +49,9 @@
                 </button>
 
                 <!-- Popover Durata -->
-                @if (showDurationPopover) {
+                @if (showDurationPopover()) {
                 <div
-                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-7 h-30">
+                    class="bg-stone-100 absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-64 border-b border-slowOrange-600 shadow-lg rounded-lg p-7 h-30 z-3">
                     <label class="block text-center font-bold text-gray-700 mb-2">Tempo massimo in minuti</label>
                     <div class="flex items-center gap-2">
                         <input formControlName="playingTime" type="number"
@@ -76,9 +76,9 @@
             </button>
         </div>
 
-        @if (showAdvancedFilters) {
+        @if (showAdvancedFilters()) {
         <!-- Filtri avanzati (genere, meccaniche) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center mb-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center mb-6 max-w-6xl mx-auto z-3">
 
             <!-- Generi -->
             <div
@@ -154,3 +154,8 @@
         
     </div>
 </form>
+
+@if(showBackdrop()) {
+    <div class="w-screen h-screen fixed top-0 left-0 bg-none z-2" (click)="removeBackdrop()">
+    </div>
+}
