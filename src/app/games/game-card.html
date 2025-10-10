@@ -1,22 +1,22 @@
 @if (gameInput()) {
 <div class="bg-neutral-100 border-b border-slowOrange-600 rounded-xl shadow-lg hover:shadow-lg 
-         transition w-full h-20 my-1 flex flex-row">
+         transition w-full max-h-[50px] md:max-h-[65px] h-full my-1 flex flex-row">
 
     <!-- Thumbnail -->
-    <div class="max-h-20 h-full p-2">
-        <img [src]="gameInput()!.thumbnail" alt="{{gameInput()!.name}}" class="w-[50px] md:w-[65px] object-cover rounded-xl" />
+    <div class="w-[50px] md:w-[65px] h-[50px] md:h-[65px]">
+        <img [src]="gameInput()!.thumbnail" alt="{{gameInput()!.name}}" class="h-[50px] md:h-[65px] w-[50px] md:w-[65px] object-cover rounded-2xl p-2" />
     </div>
 
-    <div class="grow flex flex-col md:flex-row">
+    <div class="grow flex flex-col md:flex-row p-1">
         <!-- Titolo -->
-        <div class="md:basis-2/3 lg:3/6 flex md:items-center h-full p-2">
-            <h4 class="text-l md:text-2xl font-bold font-[Roboto_Slab] line-clamp-1">
+        <div class="md:basis-2/3 lg:2/6 flex md:items-center h-full">
+            <h4 class="items-start text-l md:text-2xl font-bold font-[Roboto_Slab] line-clamp-1">
                 <a [routerLink]="['/game',gameInput()!.id]">{{gameInput()!.name}}</a>
             </h4>
         </div>
 
         <!-- Tag -->
-        <div class="hidden lg:flex lg:basis-2/6 items-center p-4">
+        <div class="hidden lg:flex lg:basis-3/6 items-center p-4">
             <div class="flex flex-wrap gap-2">
                 @for (genre of gameInput()!.genres; track genre.id) {
                 <span class="bg-slowOrange-500 text-white text-xs font-medium px-1.5 py-0.5 rounded-full">
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Info -->
-        <div class="md:basis-1/3 lg:1/6 h-full p-2 md:p-4 flex items-start md:items-end md:mt-2 text-xs text-gray-500 md:place-content-end">
+        <div class="md:basis-1/3 lg:1/6 h-full md:p-2 flex items-start md:items-end md:mt-2 text-xs text-gray-500 md:place-content-end">
             <span class="flex md:place-content-end">
                 <span>
                     <fa-icon [icon]="faClock"></fa-icon>
