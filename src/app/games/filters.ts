@@ -24,6 +24,7 @@ export class Filters {
 
   faPlus = faPlus;
   faFilter = faFilter;
+  
   showAdvancedFilters = signal(false); 
   showPlayersPopover = signal(false);
   showDurationPopover = signal(false);

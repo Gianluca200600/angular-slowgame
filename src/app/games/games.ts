@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { Filters } from "./filters";
 import { Results } from "./results";
 import { Game } from '../model/game';
+import { Auth } from "../auth";
 
 @Component({
   selector: 'app-games',
-  imports: [Filters, Results],
+  imports: [Filters, Results, Auth],
   templateUrl: './games.html',
   styleUrl: './games.css'
 })
