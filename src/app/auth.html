@@ -1,3 +1,9 @@
-<a (click)="login()" class="btn btn-primary">
-    Login
-</a>
+@if(!this.authService.isLoggedIn()) {
+    <a (click)="login()" class="btn btn-primary">
+        Login
+    </a>
+} @else {
+    <a (click)="logout()" class="btn btn-primary">
+        Logout
+    </a>
+}

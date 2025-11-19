@@ -144,18 +144,25 @@
         </div>
         }
 
-        <button
-            class="px-2 py-1 flex items-center gap-2 rounded-full border border-slowOrange-500 text-slowOrange-500
-            bg-transparent hover:bg-slowOrange-50 transition-colors"
-            type="submit" id="filter-button" [disabled]="!form.valid">
+        <button class="px-2 py-1 flex items-center gap-2 rounded-full border border-slowOrange-500 text-slowOrange-500
+            bg-transparent hover:bg-slowOrange-50 transition-colors" type="submit" id="filter-button"
+            [disabled]="!form.valid">
             <fa-icon [icon]="faFilter" class="text-sm"></fa-icon>
             <span class="text-sm font-medium">Filtra</span>
         </button>
-        
+
+        @if (this.authService.isAdmin()) {
+        <button class="px-2 py-1 flex items-center gap-2 rounded-full border border-slowOrange-500 text-slowOrange-500
+            bg-transparent hover:bg-slowOrange-50 transition-colors" type="button" id="add-game-button"
+            [disabled]="!form.valid">
+            <fa-icon [icon]="faPlus" class="text-sm"></fa-icon>
+            <span class="text-sm font-medium">Aggiungi Gioco</span>
+        </button>
+        }
     </div>
 </form>
 
 @if(showBackdrop()) {
-    <div class="w-screen h-screen fixed top-0 left-0 bg-none z-2" (click)="removeBackdrop()">
-    </div>
+<div class="w-screen h-screen fixed top-0 left-0 bg-none z-2" (click)="removeBackdrop()">
+</div>
 }

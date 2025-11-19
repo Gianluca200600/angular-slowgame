@@ -10,6 +10,7 @@ import { map } from 'rxjs';
 import { faFilter, faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { GenreService } from '../model/genre-service';
+import { AuthService } from '../model/auth-service';
 
 @Component({
   selector: 'app-filters',
@@ -20,6 +21,7 @@ import { GenreService } from '../model/genre-service';
 export class Filters {
 
   private readonly lib = inject(FaIconLibrary);
+  authService = inject(AuthService);
   constructor() { this.lib.addIcons(faUsers, faPlus, faFilter); }
 
   faPlus = faPlus;
